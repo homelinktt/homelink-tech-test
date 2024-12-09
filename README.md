@@ -52,7 +52,7 @@ curl --request GET \
 `update-device`
 
 ```bash
-curl --request POST \
+curl --request PUT \
   --url http://0.0.0.0:3000/api/devices/f7ace5d6-6b73-4c69-bd38-2f36363f1a91 \
   --header 'content-type: application/json' \
   --data '{
@@ -60,7 +60,7 @@ curl --request POST \
   "deviceName": "Kitchen Temp",
   "macAddress": "AA:BB:CC:DD:EE:FF",
   "deviceStatus": "active",
-  "tempC": 99.0, // woah thats hot
+  "tempC": 23.5,
   "location": {
     "room": "Kitchen",
     "building": "1"

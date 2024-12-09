@@ -176,7 +176,7 @@ class DeviceModel {
         UPDATE devices SET 
           device_status = COALESCE($2, device_status)
           WHERE id = $1
-        RETURNING *
+        RETURNING id, device_status
       `;
 
       try {
