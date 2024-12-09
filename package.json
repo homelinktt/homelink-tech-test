@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@koa/router": "^13.1.0",
+    "@types/jest": "^29.5.14",
     "@types/koa-bodyparser": "^4.3.12",
     "@types/pg": "^8.11.10",
     "koa": "^2.15.3",
