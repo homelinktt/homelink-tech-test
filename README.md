@@ -21,9 +21,13 @@ I was asked to complete this in a few hours and so I had to cut some corners so 
 - the schema itself is basic and doesn't scale
 
 Given more time I would have written a suite of both unit and integration tests. Unit to provide some fast, in memory validation that individual components behave as expected by mocking their dependencies. For example does the `deviceController.createDevice` method return a mocked value given a set of inputs. Integrations tests demonstrate that larger components interact together in an expected way. For example, given a database with some test data, does the route `/api/` return a list of devices.
+
 There is no relationship between the database table and the schema in the app logic. I would have used an ORM like Prisma to define a database schema which would in turn generate a schema which could be interpreted by zod, rather than duplicating in code.
+
 There is a `types/` module and a schema definition in the device controller. This works as is, but is not particularly scaleable or maintainable (duplication).
+
 I could utilize koa middleware to write an error handling middleware that could intercept throws and return appropriate information depending on the error (ie zod validation or a database error - the latter of which we wouldn't want to expose to clients).
+
 The schema is basic and serves its purpose, but I would definitely want to gather more requirements and implement something a bit more thought out for a production app. For example, what range of different devices would we be storing, how would they relate to one another, would there be any relationships for example parent > child etc. Would each device generate any data ie telemetry, logs. I included the concept of locations in my schema but this could be expanded to include clusters of devices, organisations etc.
 
 I also had a stretch goal of setting up a websocket endpoint which could have provided some dummy data stream for a given device id but I didn't have the time to implement.
