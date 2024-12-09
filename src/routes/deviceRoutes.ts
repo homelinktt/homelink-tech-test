@@ -8,5 +8,6 @@ router.get("/", DeviceController.getDevices);
 router.get("/:id", DeviceController.getDeviceById);
 router.put("/:id", DeviceController.updateDevice);
 router.del("/:id", DeviceController.deleteDevice);
+router.put("/:id/update-status", DeviceController.updateDeviceStatus);
 
 export default router;

@@ -68,4 +68,23 @@ curl --request POST \
 }'
 ```
 
+`delete-device`
+
+```bash
+curl --request DELETE \
+  --url http://0.0.0.0:3000/api/devices/f7ace5d6-6b73-4c69-bd38-2f36363f1a91 \
+  --header 'content-type: application/json'
+```
+
+`update-device-status`
+
+```bash
+curl --request PUT \
+  --url http://0.0.0.0:3000/api/devices/425e7e8d-4b49-4dbe-a6f8-2f0b2850e6c0/update-status \
+  --header 'content-type: application/json' \
+  --data '{
+  "deviceStatus": "offline"
+}'
+```
+
 This project was created using `bun init` in bun v1.1.38. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.

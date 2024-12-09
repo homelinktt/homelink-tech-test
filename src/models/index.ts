@@ -169,6 +169,24 @@ class DeviceModel {
       throw error;
     }
   }
+
+  async updateDeviceStatus(id: string, status: string) {
+    {
+      const query = `
+        UPDATE devices SET 
+          device_status = COALESCE($2, device_status)
+          WHERE id = $1
+        RETURNING *
+      `;
+
+      try {
+        return await db.one(query, [id, status]);
+      } catch (error) {
+        console.error("Error updating device status:", error);
+        throw error;
+      }
+    }
+  }
 }
 
 export default new DeviceModel();

@@ -35,6 +35,12 @@ const DeviceSchema = z.discriminatedUnion("deviceType", [
   TemperatureSensorSchema,
 ]);
 
+const DeviceStatusUpdateSchema = z
+  .object({
+    deviceStatus: z.nativeEnum(DeviceStatus),
+  })
+  .strict();
+
 export default class DeviceController {
   static async createDevice(ctx: Context) {
     try {
@@ -84,6 +90,26 @@ export default class DeviceController {
       const updatedDevice = await deviceModel.updateDevice(
         ctx.params.id,
         validatedUpdates,
+      );
+
+      ctx.body = updatedDevice;
+    } catch (error) {
+      ctx.status = 400;
+      ctx.body = {
+        error:
+          error instanceof z.ZodError ? error.errors : "Error updating device",
+      };
+    }
+  }
+
+  static async updateDeviceStatus(ctx: Context) {
+    try {
+      const updateData = ctx.request.body;
+
+      const validatedUpdates = DeviceStatusUpdateSchema.parse(updateData);
+      const updatedDevice = await deviceModel.updateDeviceStatus(
+        ctx.params.id,
+        validatedUpdates.deviceStatus,
       );
 
       ctx.body = updatedDevice;
