@@ -52,4 +52,15 @@ export default class DeviceController {
       };
     }
   }
+
+  static async getDevices(ctx: Context) {
+    console.log("hello");
+    try {
+      const devices = await deviceModel.getAllDevices();
+      ctx.body = devices;
+    } catch {
+      ctx.status = 500;
+      ctx.body = { error: "Error fetching devices" };
+    }
+  }
 }
