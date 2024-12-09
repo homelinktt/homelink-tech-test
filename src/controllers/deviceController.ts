@@ -54,13 +54,25 @@ export default class DeviceController {
   }
 
   static async getDevices(ctx: Context) {
-    console.log("hello");
+    console.log("all");
     try {
       const devices = await deviceModel.getAllDevices();
       ctx.body = devices;
     } catch {
       ctx.status = 500;
       ctx.body = { error: "Error fetching devices" };
+    }
+  }
+
+  static async getDeviceById(ctx: Context) {
+    console.log("by id", ctx.params.id);
+    try {
+      const device = await deviceModel.getDeviceById(ctx.params.id);
+
+      ctx.body = device;
+    } catch (error) {
+      ctx.status = 500;
+      ctx.body = { error: "Error fetching device" };
     }
   }
 }

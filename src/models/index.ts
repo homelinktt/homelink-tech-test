@@ -100,6 +100,15 @@ class DeviceModel {
       console.error("error getting all devices", e as Error);
     }
   }
+
+  async getDeviceById(id: string) {
+    console.log(id);
+    try {
+      return await db.oneOrNone("SELECT * FROM devices WHERE id = $1", [id]);
+    } catch {
+      console.error("couldn't get device by id");
+    }
+  }
 }
 
 export default new DeviceModel();
