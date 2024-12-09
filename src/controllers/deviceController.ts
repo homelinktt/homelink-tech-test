@@ -75,4 +75,25 @@ export default class DeviceController {
       ctx.body = { error: "Error fetching device" };
     }
   }
+
+  static async updateDevice(ctx: Context) {
+    try {
+      const deviceData = ctx.request.body;
+
+      const validatedUpdates = DeviceSchema.parse(deviceData);
+      const updatedDevice = await deviceModel.updateDevice(
+        ctx.params.id,
+        validatedUpdates,
+      );
+
+      ctx.body = updatedDevice;
+    } catch (error) {
+      ctx.status = 400;
+      ctx.body = {
+        error:
+          error instanceof z.ZodError ? error.errors : "Error updating device",
+      };
+    }
+  }
+
 }

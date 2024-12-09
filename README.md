@@ -35,4 +35,37 @@ curl --request POST \
 }'
 ```
 
+`get-devices`
+
+```bash
+curl --request GET \
+  --url http://0.0.0.0:3000/api/devices
+```
+
+`get-device-by-id`
+
+```bash
+curl --request GET \
+  --url http://0.0.0.0:3000/api/devices/425e7e8d-4b49-4dbe-a6f8-2f0b2850e6c0
+```
+
+`update-device`
+
+```bash
+curl --request POST \
+  --url http://0.0.0.0:3000/api/devices/f7ace5d6-6b73-4c69-bd38-2f36363f1a91 \
+  --header 'content-type: application/json' \
+  --data '{
+  "deviceType": "TemperatureSensor",
+  "deviceName": "Kitchen Temp",
+  "macAddress": "AA:BB:CC:DD:EE:FF",
+  "deviceStatus": "active",
+  "tempC": 99.0, // woah thats hot
+  "location": {
+    "room": "Kitchen",
+    "building": "1"
+  }
+}'
+```
+
 This project was created using `bun init` in bun v1.1.38. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.

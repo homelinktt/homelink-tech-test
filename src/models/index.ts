@@ -109,6 +109,55 @@ class DeviceModel {
       console.error("couldn't get device by id");
     }
   }
+  async updateDevice(
+    id: string,
+    updates: Partial<AirSensor | TemperatureSensor>,
+  ) {
+    const {
+      deviceName,
+      macAddress,
+      deviceStatus,
+      batteryLevel,
+      signalStrength,
+      location,
+      ...specificProps
+    } = updates;
+
+    const query = `
+    UPDATE devices SET 
+      device_name = COALESCE($1, device_name),
+      mac_address = COALESCE($2, mac_address),
+      device_status = COALESCE($3, device_status),
+      battery_level = COALESCE($4, battery_level),
+      signal_strength = COALESCE($5, signal_strength),
+      room = COALESCE($6, room),
+      building = COALESCE($7, building),
+      moisture_level = COALESCE($8, moisture_level),
+      temp_c = COALESCE($9, temp_c)
+    WHERE id = $10
+    RETURNING *
+  `;
+
+    const values = [
+      deviceName,
+      macAddress,
+      deviceStatus,
+      batteryLevel,
+      signalStrength,
+      location?.room,
+      location?.building,
+      "moistureLevel" in specificProps ? specificProps.moistureLevel : null,
+      "tempC" in specificProps ? specificProps.tempC : null,
+      id,
+    ];
+
+    try {
+      return await db.one(query, values);
+    } catch (error) {
+      console.error("Error updating device:", error);
+      throw error;
+    }
+  }
 }
 
 export default new DeviceModel();
