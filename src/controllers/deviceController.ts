@@ -30,16 +30,16 @@ const TemperatureSensorSchema = DeviceBaseSchema.extend({
   tempC: z.number(),
 });
 
-const DeviceSchema = z.discriminatedUnion("deviceType", [
-  AirSensorSchema,
-  TemperatureSensorSchema,
-]);
-
 const DeviceStatusUpdateSchema = z
   .object({
     deviceStatus: z.nativeEnum(DeviceStatus),
   })
   .strict();
+
+const DeviceSchema = z.discriminatedUnion("deviceType", [
+  AirSensorSchema,
+  TemperatureSensorSchema,
+]);
 
 export default class DeviceController {
   static async createDevice(ctx: Context) {
@@ -59,26 +59,24 @@ export default class DeviceController {
     }
   }
 
-  static async getDevices(ctx: Context) {
-    console.log("all");
+  static async getAllDevices(ctx: Context) {
     try {
       const devices = await deviceModel.getAllDevices();
       ctx.body = devices;
-    } catch {
+    } catch (error) {
       ctx.status = 500;
-      ctx.body = { error: "Error fetching devices" };
+      ctx.body = { message: "Error fetching devices", error };
     }
   }
 
   static async getDeviceById(ctx: Context) {
-    console.log("by id", ctx.params.id);
     try {
       const device = await deviceModel.getDeviceById(ctx.params.id);
 
       ctx.body = device;
     } catch (error) {
       ctx.status = 500;
-      ctx.body = { error: "Error fetching device" };
+      ctx.body = { message: "Error fetching device", error };
     }
   }
 
@@ -128,7 +126,7 @@ export default class DeviceController {
       ctx.status = 204;
     } catch (error) {
       ctx.status = 500;
-      ctx.body = { error: "Error deleting device" };
+      ctx.body = { message: "Error deleting device", error };
     }
   }
 }

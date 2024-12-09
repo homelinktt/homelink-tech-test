@@ -2,7 +2,7 @@ import pgPromise from "pg-promise";
 import type { AirSensor, TemperatureSensor } from "../types";
 
 const connectionOptions = {
-  connectionString: process.env.DB_CSTRING,
+  connectionString: process.env.DB_CSTRING || "your_cs",
   password: process.env.DB_PASSWORD || "your_password",
 };
 
@@ -10,8 +10,6 @@ const pgp = pgPromise();
 const db = pgp(connectionOptions);
 
 class DeviceModel {
-  private db: any;
-
   constructor() {
     this.initDatabase();
   }
@@ -51,7 +49,6 @@ class DeviceModel {
   }
 
   async createDevice(device: AirSensor | TemperatureSensor) {
-    console.log("creatingDevice", device);
     const {
       deviceType,
       deviceName,
@@ -102,7 +99,6 @@ class DeviceModel {
   }
 
   async getDeviceById(id: string) {
-    console.log(id);
     try {
       return await db.oneOrNone("SELECT * FROM devices WHERE id = $1", [id]);
     } catch {
