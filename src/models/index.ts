@@ -109,6 +109,7 @@ class DeviceModel {
       console.error("couldn't get device by id");
     }
   }
+
   async updateDevice(
     id: string,
     updates: Partial<AirSensor | TemperatureSensor>,
@@ -155,6 +156,16 @@ class DeviceModel {
       return await db.one(query, values);
     } catch (error) {
       console.error("Error updating device:", error);
+      throw error;
+    }
+  }
+
+  async deleteDevice(id: string) {
+    try {
+      await db.none("DELETE FROM devices WHERE id = $1", [id]);
+      return { message: "Device deleted successfully" };
+    } catch (error) {
+      console.error("Error deleting device:", error);
       throw error;
     }
   }

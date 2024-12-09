@@ -96,4 +96,13 @@ export default class DeviceController {
     }
   }
 
+  static async deleteDevice(ctx: Context) {
+    try {
+      await deviceModel.deleteDevice(ctx.params.id);
+      ctx.status = 204;
+    } catch (error) {
+      ctx.status = 500;
+      ctx.body = { error: "Error deleting device" };
+    }
+  }
 }
