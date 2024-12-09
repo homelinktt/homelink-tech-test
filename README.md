@@ -8,7 +8,7 @@ I was asked to create a REST api for handling smart home devices. I chose to use
 
 To run this locally you will need to install [bun](https://bun.sh/) and follow the steps below. There is an included `.env` file with a connection string to a postgresql database I created in supabase, although you could connect this to your own postgresql instance and the init script would create the required table for you. There are several endpoints listed below with example curl requests.
 
-The app structure follows a typical koa / express style, with routes, controllers and models for each slice of the api stack. Routes define what endpoints the app expose to the node runtime for consumption from clients. Controllers are an abstraction over the request context and interact with models (data layer).
+The app structure follows a typical koa / express style, with routes, controllers and models for each slice of the api stack. Routes define which endpoints the app expose to the node runtime for consumption from clients. Controllers are an abstraction over the request context and interact with models (data layer).
 
 ## Assumptions and shortcomings
 
